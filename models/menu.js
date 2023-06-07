@@ -9,4 +9,9 @@ async function findMenuItemById(id) {
     return await menuDb.find({ _id: id });
 }
 
-module.exports = { getAllMenuItems, findMenuItemById }
+async function addMenuItem(menuItem) {
+    return await menuDb.insert(menuItem);
+
+}
+
+module.exports = { getAllMenuItems, findMenuItemById, addMenuItem }

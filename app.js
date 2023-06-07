@@ -8,12 +8,13 @@ const {
     validateUserId,
     validateUserIdOrGuest,
 } = require("./middlewares/validateUser");
+const { checkProductnameAvailability } = require("./middlewares/validateItem");
 const { checkProducts } = require("./middlewares/checkProducts");
 const { validateOrderNr } = require("./middlewares/validateOrderNr");
 const { calcDeliveryTime } = require("./middlewares/calcDeliveryTime");
 const { calculateTotalPrice } = require("./middlewares/calculateTotalPrice");
 const { createUser } = require("./models/users");
-const { getAllMenuItems } = require("./models/menu");
+const { getAllMenuItems, addMenuItem } = require("./models/menu");
 const { saveToOrders, findOrdersByUserId } = require("./models/orders");
 const { uuid } = require("uuidv4");
 const express = require("express");
@@ -34,6 +35,29 @@ app.get("/api/menu", async (req, res) => {
         });
     }
 });
+
+app.post(
+    "/api/menu/addProduct",
+    checkProductnameAvailability,
+    async (req, res) => {
+        try {
+            const menuItem = {
+                title: req.body.title,
+                desc: req.body.desc,
+                price: req.body.price,
+                createdAt: new Date(),
+            };
+            await addMenuItem(menuItem);
+            res.status(201).json({ success: true });
+        } catch (err) {
+            res.status(500).json({
+                success: false,
+                message: "Error occurred while adding item",
+                error: err.code,
+            });
+        }
+    }
+);
 
 app.post(
     "/api/order/:userId",
