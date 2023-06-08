@@ -1,4 +1,4 @@
-const { getAllMenuItems } = require("../models/menu");
+const { getAllMenuItems, findItemId } = require("../models/menu");
 
 async function checkProductnameAvailability(req, res, next) {
     const { title } = req.body;
@@ -16,6 +16,37 @@ async function checkProductnameAvailability(req, res, next) {
     }
 }
 
+async function validateProductData(req, res, next) {
+    const body = req.body;
+
+    if (body.hasOwnProperty('title') && body.hasOwnProperty('desc') && body.hasOwnProperty('price')) {
+        next();
+    } else {
+        res.json({
+            success: false,
+            missingData: true,
+            message: "Product must include title, desc and price. Please double check your input."
+        })
+    }
+}
+
+async function checkIfProductExist(req, res, next) {
+    const id = req.body.id;
+    const findId = await findItemId(id);
+
+    if (findId) {
+        next();
+    } else {
+        res.json({
+            success: false,
+            findId: false,
+            message: "Failed to find ID."
+        })
+    }
+}
+
 module.exports = {
-    checkProductnameAvailability
+    checkProductnameAvailability,
+    validateProductData,
+    checkIfProductExist
 };

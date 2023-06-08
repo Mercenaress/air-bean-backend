@@ -11,7 +11,18 @@ async function findMenuItemById(id) {
 
 async function addMenuItem(menuItem) {
     return await menuDb.insert(menuItem);
-
 }
 
-module.exports = { getAllMenuItems, findMenuItemById, addMenuItem }
+async function updateMenuItem(id, newValues, modifiedAt) {
+    return await menuDb.update({ _id: id }, { $set: { title: newValues.title, desc: newValues.desc, price: newValues.price, modifiedAt: modifiedAt}});
+}
+
+async function deleteMenuItem(id) {
+    return await menuDb.remove({ _id: id });
+}
+
+async function findItemId(id) {
+    return await menuDb.findOne({ _id: id });
+}
+
+module.exports = { getAllMenuItems, findMenuItemById, addMenuItem, deleteMenuItem, findItemId, updateMenuItem }

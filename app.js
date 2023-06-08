@@ -8,13 +8,13 @@ const {
     validateUserId,
     validateUserIdOrGuest,
 } = require("./middlewares/validateUser");
-const { checkProductnameAvailability } = require("./middlewares/validateItem");
+const { checkProductnameAvailability, validateProductData, checkIfProductExist } = require("./middlewares/validateItem");
 const { checkProducts } = require("./middlewares/checkProducts");
 const { validateOrderNr } = require("./middlewares/validateOrderNr");
 const { calcDeliveryTime } = require("./middlewares/calcDeliveryTime");
 const { calculateTotalPrice } = require("./middlewares/calculateTotalPrice");
 const { createUser } = require("./models/users");
-const { getAllMenuItems, addMenuItem } = require("./models/menu");
+const { getAllMenuItems, addMenuItem, deleteMenuItem, updateMenuItem } = require("./models/menu");
 const { saveToOrders, findOrdersByUserId } = require("./models/orders");
 const { uuid } = require("uuidv4");
 const express = require("express");
@@ -38,6 +38,7 @@ app.get("/api/menu", async (req, res) => {
 
 app.post(
     "/api/menu/addProduct",
+    validateProductData,
     checkProductnameAvailability,
     async (req, res) => {
         try {
@@ -58,6 +59,48 @@ app.post(
         }
     }
 );
+
+app.put(
+    "/api/menu/editProduct",
+    validateProductData,
+    async (req, res) => {
+        try {
+            const id = req.body.id;
+            const modifiedAt = new Date();
+            const newValues = {
+                title: req.body.title,
+                desc: req.body.desc,
+                price: req.body.price,
+            }
+            await updateMenuItem(id, newValues, modifiedAt);
+            res.status(200).json({ success:true });
+        } catch (err) {
+            res.status(500).json({
+                success: false,
+                message: "Error occured while editing item",
+                error: err.code,
+            });
+        }
+    }
+)
+
+app.delete(
+    "/api/menu/removeProduct",
+    checkIfProductExist,
+    async (req, res) => {
+        try {
+            const id = req.body.id;
+            await deleteMenuItem(id);
+            res.status(200).json({ success: true });
+        } catch (err) {
+            res.status(500).json({
+                success: false,
+                message: "Error occured while deleting item",
+                error: err.code,
+            });
+        }
+    }
+)
 
 app.post(
     "/api/order/:userId",
@@ -101,6 +144,7 @@ app.post(
             const user = {
                 username: req.body.username,
                 password: req.body.password,
+                isAdmin: req.body.isAdmin,
                 userId: uuid(),
             };
             await createUser(user); // Adds user to database
