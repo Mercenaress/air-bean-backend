@@ -13,4 +13,8 @@ async function findUserById(userId) {
     return await usersDb.findOne({ userId });
 }
 
-module.exports = { getAllUsers, createUser, findUserById };
+async function findUserByUsername(username) {
+    return await usersDb.findOne({ username });
+}
+
+module.exports = { getAllUsers, createUser, findUserById, findUserByUsername };

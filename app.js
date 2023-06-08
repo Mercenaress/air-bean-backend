@@ -13,11 +13,12 @@ const { checkProducts } = require("./middlewares/checkProducts");
 const { validateOrderNr } = require("./middlewares/validateOrderNr");
 const { calcDeliveryTime } = require("./middlewares/calcDeliveryTime");
 const { calculateTotalPrice } = require("./middlewares/calculateTotalPrice");
-const { createUser } = require("./models/users");
+const { createUser, findUserByUsername } = require("./models/users");
 const { getAllMenuItems, addMenuItem, deleteMenuItem, updateMenuItem } = require("./models/menu");
 const { saveToOrders, findOrdersByUserId } = require("./models/orders");
 const { uuid } = require("uuidv4");
 const express = require("express");
+const { generateToken, verifyToken } = require("./middlewares/token");
 const app = express();
 
 const port = 5000;
@@ -38,6 +39,7 @@ app.get("/api/menu", async (req, res) => {
 
 app.post(
     "/api/menu/addProduct",
+    verifyToken,
     validateProductData,
     checkProductnameAvailability,
     async (req, res) => {
@@ -144,7 +146,7 @@ app.post(
             const user = {
                 username: req.body.username,
                 password: req.body.password,
-                isAdmin: req.body.isAdmin,
+                role: req.body.role,
                 userId: uuid(),
             };
             await createUser(user); // Adds user to database
@@ -165,7 +167,14 @@ app.post(
     checkPasswordMatch,
     async (req, res) => {
         try {
-            res.json({ success: true, isLoggedIn: true });
+            const user = findUserByUsername(req.body.username);
+            const payload = {
+                username: user.username,
+                role: user.role,
+                id: user._id,
+            }
+            const token = generateToken(payload);
+            res.json({ success: true, isLoggedIn: true, token: token });
         } catch (err) {
             res.status(500).json({
                 success: false,
