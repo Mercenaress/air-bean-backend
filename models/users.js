@@ -14,7 +14,6 @@ async function findUserById(userId) {
 }
 
 async function findUserByUsername(username) {
-    console.log(username);
     return await usersDb.findOne({ username: username });
 }
 

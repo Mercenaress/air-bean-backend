@@ -8,23 +8,29 @@ function generateToken(payload) {
 
 function verifyToken(allowedRoles) {
     return (req, res, next) => {
-        console.log(allowedRoles);
-        const token = req.headers.authorization.replace('Bearer ', '');
-        const validToken = jwt.verify(token, secretKey);
-        if (validToken) {
-            if (allowedRoles.includes(validToken.role)) {
-                next();
+        try {
+            const token = req.headers.authorization.replace('Bearer ', '');
+            const validToken = jwt.verify(token, secretKey);
+            if (validToken) {
+                if (validToken.role == allowedRoles) {
+                        next();
+                } else {
+                    res.status(403).json({
+                        success: false,
+                        message: "Missing permission for access."
+                    })
+                }
             } else {
-                res.status(403).json({
+                res.status(500).json({
                     success: false,
-                    message: "Missing permission for access."
-                })
+                    message: "Invalid token.",
+                });
             }
-        } else {
-            res.status(400).json({
+        } catch {
+            res.status(500).json({
                 success: false,
                 message: "Invalid token.",
-            });
+            })
         }
     }
 }
