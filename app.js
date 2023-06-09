@@ -19,6 +19,7 @@ const { saveToOrders, findOrdersByUserId } = require("./models/orders");
 const { uuid } = require("uuidv4");
 const express = require("express");
 const { generateToken, verifyToken } = require("./middlewares/token");
+const { addCampaign } = require("./models/campaign");
 const app = express();
 const allowedRoles = ["admin"];
 
@@ -86,7 +87,7 @@ app.put(
             });
         }
     }
-)
+);
 
 app.delete(
     "/api/menu/removeProduct",
@@ -105,7 +106,25 @@ app.delete(
             });
         }
     }
-)
+);
+
+app.post(
+    "/api/campaigns/addCampaign",
+    verifyToken(allowedRoles),
+    checkProducts,
+    async (req, res) => {
+        const campaignProducts = req.body.products;
+        const campaignPrice = req.body.price;
+
+        const newCampaign = {
+            products: campaignProducts,
+            price: campaignPrice
+        }
+
+        await addCampaign(newCampaign);
+        res.json({ success: true });
+    }
+);
 
 app.post(
     "/api/order/:userId",
