@@ -20,6 +20,7 @@ const { uuid } = require("uuidv4");
 const express = require("express");
 const { generateToken, verifyToken } = require("./middlewares/token");
 const app = express();
+const allowedRoles = ["admin"];
 
 const port = 5000;
 
@@ -39,7 +40,7 @@ app.get("/api/menu", async (req, res) => {
 
 app.post(
     "/api/menu/addProduct",
-    verifyToken,
+    verifyToken(allowedRoles),
     validateProductData,
     checkProductnameAvailability,
     async (req, res) => {
@@ -64,6 +65,7 @@ app.post(
 
 app.put(
     "/api/menu/editProduct",
+    verifyToken(allowedRoles),
     validateProductData,
     async (req, res) => {
         try {
@@ -88,6 +90,7 @@ app.put(
 
 app.delete(
     "/api/menu/removeProduct",
+    verifyToken(allowedRoles),
     checkIfProductExist,
     async (req, res) => {
         try {
@@ -167,7 +170,7 @@ app.post(
     checkPasswordMatch,
     async (req, res) => {
         try {
-            const user = findUserByUsername(req.body.username);
+            const user = await findUserByUsername(req.body.username);
             const payload = {
                 username: user.username,
                 role: user.role,

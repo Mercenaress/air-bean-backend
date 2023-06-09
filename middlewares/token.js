@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-
 const secretKey = "heh";
 
 function generateToken(payload) {
@@ -7,24 +6,26 @@ function generateToken(payload) {
     return token;
 }
 
-function verifyToken(req, res, next) {
-    try {
+function verifyToken(allowedRoles) {
+    return (req, res, next) => {
+        console.log(allowedRoles);
         const token = req.headers.authorization.replace('Bearer ', '');
         const validToken = jwt.verify(token, secretKey);
         if (validToken) {
-            next();
+            if (allowedRoles.includes(validToken.role)) {
+                next();
+            } else {
+                res.status(403).json({
+                    success: false,
+                    message: "Missing permission for access."
+                })
+            }
         } else {
-            res.json({
+            res.status(400).json({
                 success: false,
                 message: "Invalid token.",
             });
         }
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: "Invalid token",
-            error: err.code,
-        });
     }
 }
 

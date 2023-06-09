@@ -14,7 +14,8 @@ async function findUserById(userId) {
 }
 
 async function findUserByUsername(username) {
-    return await usersDb.findOne({ username });
+    console.log(username);
+    return await usersDb.findOne({ username: username });
 }
 
 module.exports = { getAllUsers, createUser, findUserById, findUserByUsername };
