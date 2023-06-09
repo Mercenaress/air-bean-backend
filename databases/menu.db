@@ -1,11 +1,8 @@
-{"title":"poopie","desc":"öökie","price":30,"createdAt":{"$$date":1686144000604},"_id":"4QofL92DrpfVnyx1","modifiedAt":{"$$date":1686299618496}}
-{"title":"Kaffe Latte","desc":"Bryggd på månadens bönor.","price":54,"_id":"9XQAPoarvCkRUhz2"}
-{"title":"Cortado","desc":"Bryggd på månadens bönor.","price":39,"_id":"Env7zeTHBxyW7W1z"}
-{"title":"ton trial","desc":"jalwhfwafjkkwa","price":30,"createdAt":{"$$date":1686302636125},"_id":"FADbttLMqCxqNpk1"}
-{"title":"Cappuccino","desc":"Bryggd på månadens bönor.","price":49,"_id":"XOgx0eJtJHYnBpzt"}
-{"title":"Semla","desc":"En fastlagsbulle i sin rätta form.","price":50,"_id":"bH7DC60FtvAgWoXn"}
-{"title":"Bryggkaffe","desc":"Bryggd på månadens bönor.","price":39,"_id":"cw01DxvL60yTApq5"}
-{"title":"Gustav Adolfsbakelse","desc":"En kunglig bakelse.","price":50,"_id":"dkYIjhT9nZhYnT6H"}
-{"title":"Caffè Doppio","desc":"Bryggd på månadens bönor.","price":49,"_id":"jdhW6ClobWK7pXlL"}
-{"title":"Latte Macchiato","desc":"Bryggd på månadens bönor.","price":49,"_id":"srUZ3eapAit6anvI"}
-{"title":"toot trial","desc":"jalwhfwafjkkwa","price":30,"createdAt":{"$$date":1686303346470},"_id":"utnX3zE1kSP8cagb"}
+{"title":"Caffé Doppio","desc":"Bryggd på månadens bönor","price":49,"createdAt":{"$$date":1686309812557},"_id":"6MU8H48DnBHGm0md"}
+{"title":"Gustav Adolfsbakelse","desc":"En kunglig bakelse","price":50,"createdAt":{"$$date":1686309907632},"_id":"9M8CNi0IIjs6xJqF"}
+{"title":"Kaffe Latte","desc":"Bryggd på månadens bönor","price":54,"createdAt":{"$$date":1686309727429},"_id":"CqcA7NmLNpC12iT3"}
+{"title":"Latte Macchiato","desc":"Bryggd på månadens bönor","price":49,"createdAt":{"$$date":1686309825506},"_id":"bMNiYzXzbR4KY85C"}
+{"title":"Cappucino","desc":"Bryggd på månadens bönor","price":49,"createdAt":{"$$date":1686309770761},"_id":"eVWSYY8v578AsAr7"}
+{"title":"Bryggkaffe","desc":"Bryggd på månadens bönor","price":39,"createdAt":{"$$date":1686309791515},"_id":"gHo9h3hahGEmNSvC"}
+{"title":"Cortado","desc":"Bryggd på månadens bönor","price":39,"createdAt":{"$$date":1686309755201},"_id":"jxrXyimhc5tIdTjF"}
+{"title":"Semla","desc":"En fastlagsbulle i sin rätta form","price":50,"createdAt":{"$$date":1686309874204},"_id":"lTeWyAL2FhPwTkFT"}

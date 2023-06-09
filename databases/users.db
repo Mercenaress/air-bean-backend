@@ -1,6 +1,2 @@
-{"username":"Berat123","password":"12345678","userId":"606adc84-1d6e-4059-8e95-95fb91f533f7","_id":"5Eum7RcvsaSIPwap"}
-{"username":"Teeny","password":"69696969","isAdmin":true,"userId":"9b12b5f0-e1e8-4ca9-89ad-9271724a36a7","_id":"XYzV9qn5KKVoL3xI"}
-{"username":"Berat","password":"12345678","userId":"c12664fc-2b73-4237-a35c-de47d49bed8e","_id":"fzsjIooWz96Uq5JN"}
-{"username":"Weeny","password":"69696969","role":"admin","userId":"460d1924-e248-4467-b904-81692eda6ac3","_id":"j9F1NpgQf2mbkd8S"}
-{"username":"Admin","password":"420691337","userId":"bcd2f892-c9b9-4c2e-b135-ed4d8fe0cebf","_id":"wq9aMKPc4cxNxS6Z"}
-{"username":"Bleh","password":"69696969","role":"user","userId":"992ea52e-287e-4e7d-9189-c4d7612adba4","_id":"xCV4w4qXc4bxSR1D"}
+{"username":"Admin","password":"$2b$10$Iel2FInMjAuEP032lVz5Kerq7ZfM5uYP2Fv/miT35hRCNFMpbw9IC","role":"admin","userId":"3a407e77-c5f1-48ba-9586-6de27cc78427","_id":"VQB3YchP20kVv5xj"}
+{"username":"Regular Joe","password":"$2b$10$4U9hUDo.62wyfdKQa8jG3uk40YSf.IIOV6pPTZP2f4yvn1FTB0Tti","role":"user","userId":"9263006f-d3c3-45fd-b26d-52a41abbf83a","_id":"xznnQTvRWS5ipBRU"}

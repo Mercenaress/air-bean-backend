@@ -14,12 +14,13 @@ const { validateOrderNr } = require("./middlewares/validateOrderNr");
 const { calcDeliveryTime } = require("./middlewares/calcDeliveryTime");
 const { calculateTotalPrice } = require("./middlewares/calculateTotalPrice");
 const { createUser, findUserByUsername } = require("./models/users");
-const { getAllMenuItems, addMenuItem, deleteMenuItem, updateMenuItem } = require("./models/menu");
+const { getAllMenuItems, addMenuItem, deleteMenuItem, updateMenuItem, findItemId } = require("./models/menu");
 const { saveToOrders, findOrdersByUserId } = require("./models/orders");
 const { uuid } = require("uuidv4");
 const express = require("express");
 const { generateToken, verifyToken } = require("./middlewares/token");
 const { addCampaign } = require("./models/campaign");
+const { hashPassword } = require("./middlewares/bcrypt");
 const app = express();
 const allowedRoles = ["admin"];
 
@@ -71,14 +72,22 @@ app.put(
     async (req, res) => {
         try {
             const id = req.body.id;
-            const modifiedAt = new Date();
-            const newValues = {
-                title: req.body.title,
-                desc: req.body.desc,
-                price: req.body.price,
+            const existingId = await findItemId(id);
+            if (existingId) {
+                const modifiedAt = new Date();
+                const newValues = {
+                    title: req.body.title,
+                    desc: req.body.desc,
+                    price: req.body.price,
+                }
+                await updateMenuItem(id, newValues, modifiedAt);
+                res.status(200).json({ success:true });
+            } else {
+                res.status(404).json({
+                    success: false,
+                    message: "The product you tried to edit does not exist"
+                });
             }
-            await updateMenuItem(id, newValues, modifiedAt);
-            res.status(200).json({ success:true });
         } catch (err) {
             res.status(500).json({
                 success: false,
@@ -165,9 +174,11 @@ app.post(
     checkPasswordSecurity,
     async (req, res) => {
         try {
+            const password = req.body.password;
+            const hashedPass = await hashPassword(password);
             const user = {
                 username: req.body.username,
-                password: req.body.password,
+                password: hashedPass,
                 role: req.body.role,
                 userId: uuid(),
             };
