@@ -59,7 +59,7 @@ http://localhost:5000/api/campaigns/addCampaign
 ```
 {
 	"products": [{"_id": "lTeWyAL2FhPwTkFT"}, 
-							 {"_id": "jxrXyimhc5tIdTjF"}],
+		     {"_id": "jxrXyimhc5tIdTjF"}],
 	"price": 50
 }
 ```
